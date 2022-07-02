@@ -6,7 +6,7 @@ const mn = algosdk.secretKeyToMnemonic(account.sk);
 console.log('My address:' + account.addr);
 console.log('My mnemonic:' + mn);
 
-const recoveredSk = algosdk.mnemonicToSecretKey(mn);
-const recoveredMn = algosdk.secretKeyToMnemonic(recoveredSk);
+const recoveredAccount = algosdk.mnemonicToSecretKey(mn);
+const recoveredMn = algosdk.secretKeyToMnemonic(recoveredAccount.sk);
 
-console.log('My recovered mnemonic:' + recoveredMn);
+console.log('My mnemonic and recovered mnemonic are same:', mn == recoveredMn);
