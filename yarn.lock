@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@algorand-builder/types-algosdk@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@algorand-builder/types-algosdk/-/types-algosdk-0.2.2.tgz#840104e1b5c26b681ecc1b4b6700b38a5270b976"
+  integrity sha512-yiXFnexyz+JojBz0vQn+IcbV6AO2q1+EWjaBplRJc6uAkJ54tQPWhBf1obF1ug36tqLukv48IcaasioU5toAmA==
+
 "@babel/code-frame@^7.0.0":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.18.6.tgz#3b25d38c89600baa2dcc219edfa88a74eb2c427a"
