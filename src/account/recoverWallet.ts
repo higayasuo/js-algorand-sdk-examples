@@ -1,10 +1,11 @@
 import * as algosdk from 'algosdk';
 
-import * as env from 'env';
+import { WALLET1 } from '@/constants';
+import * as env from '@/env';
 
 const kmdclient = new algosdk.Kmd(env.KMD_TOKEN, env.SERVER, env.KMD_PORT);
 
-// Paste <wallet-menmonic>
+// Paste <account-menmonic>
 const mdkMn =
   'broken weather speak culture price regular army subway grape dentist desert gadget sick hollow kitten charge crucial crunch expect focus visit caught spare above robot';
 
@@ -12,7 +13,7 @@ const mdkMn =
   const mdk = await algosdk.mnemonicToMasterDerivationKey(mdkMn);
 
   const walletid = (
-    await kmdclient.createWallet('MyTestWallet1', env.TEST_PASSWORD, mdk)
+    await kmdclient.createWallet(WALLET1, env.TEST_PASSWORD, mdk)
   ).wallet.id;
   console.log('Recovered wallet: ', walletid);
 

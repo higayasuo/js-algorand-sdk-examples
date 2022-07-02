@@ -1,13 +1,13 @@
 import * as algosdk from 'algosdk';
 
-import * as env from 'env';
+import { WALLET1 } from '@/constants';
+import * as env from '@/env';
 
 const kmdclient = new algosdk.Kmd(env.KMD_TOKEN, env.SERVER, env.KMD_PORT);
 
 (async () => {
-  const walletid = (
-    await kmdclient.createWallet('MyTestWallet1', env.TEST_PASSWORD)
-  ).wallet.id;
+  const walletid = (await kmdclient.createWallet(WALLET1, env.TEST_PASSWORD))
+    .wallet.id;
   console.log('Wallet:', walletid);
 
   const wallethandle = (

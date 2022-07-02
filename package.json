@@ -6,10 +6,7 @@
   "author": "higayasuo <higayasuo@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "ts-node": "NODE_PATH=./src ts-node"
-  },
-  "alias": {
-    "env": "./src/env"
+    "ts-node": "ts-node -r tsconfig-paths/register --transpile-only"
   },
   "devDependencies": {
     "@algorand-builder/types-algosdk": "^0.2.2",
@@ -20,6 +17,7 @@
     "eslint-config-prettier": "^8.5.0",
     "parcel": "^2.6.2",
     "ts-node": "^10.8.1",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {

@@ -1,3 +1,3 @@
-import * as env from 'env';
+import * as env from '@/env';
 
-console.log('hello', env.HOGE);
+console.log('hello', env.SERVER);

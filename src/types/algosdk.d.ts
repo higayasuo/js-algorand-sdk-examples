@@ -683,7 +683,7 @@ declare module 'algosdk' {
     rekeyTo?: string
   ): any;
 
-  export function masterDerivationKeyToMnemonic(mdk: any): string;
+  export function masterDerivationKeyToMnemonic(mdk: Buffer): string;
 
   /**
    * mergeMultisigTransactions takes a list of multisig transaction blobs, and merges them.
@@ -696,7 +696,7 @@ declare module 'algosdk' {
 
   export function microalgosToAlgos(microalgos: any): any;
 
-  export function mnemonicToMasterDerivationKey(mn: string): any;
+  export function mnemonicToMasterDerivationKey(mn: string): Buffer;
 
   export function mnemonicToSecretKey(mn: string): Account;
 
