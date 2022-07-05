@@ -1,7 +1,4 @@
-// Type definitions for algosdk 1.8.0
-// Project: https://github.com/algorand/js-algorand-sdk
-// Definitions by: Robert Zaremba <https://github.com/robert-zaremba>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 declare module 'algosdk' {
   export class Algod {
@@ -756,6 +753,12 @@ declare module 'algosdk' {
     signature: Uint8Array,
     addr: string
   ): boolean;
+
+  export function waitForConfirmation(
+    client: Algodv2,
+    txid: string,
+    waitRounds: number
+  ): Promise<Record<string, any>>;
 
   export namespace ERROR_INVALID_MICROALGOS {
     const message: string;

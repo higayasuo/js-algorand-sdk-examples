@@ -3,7 +3,7 @@ import * as algosdk from 'algosdk';
 import { WALLET1 } from '@/constants';
 import * as env from '@/env';
 
-const kmdclient = new algosdk.Kmd(env.KMD_TOKEN, env.SERVER, env.KMD_PORT);
+const kmdclient = new algosdk.Kmd(env.TOKEN, env.SERVER, env.KMD_PORT);
 
 const getWallet = async (name: string) => {
   const wallets = (await kmdclient.listWallets()).wallets;
@@ -16,10 +16,17 @@ const getWallet = async (name: string) => {
   return wallet.id;
 };
 
-(async () => {
+const main = async () => {
   console.log(await getWallet(WALLET1));
-})().catch((e) => {
-  console.error(e);
-});
+};
+
+if (require.main === module) {
+  (async () => {
+    await main();
+    process.exit();
+  })().catch((e) => {
+    console.error(e);
+  });
+}
 
 export default getWallet;

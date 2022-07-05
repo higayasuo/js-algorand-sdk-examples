@@ -3,7 +3,7 @@ import * as algosdk from 'algosdk';
 import { WALLET1 } from '@/constants';
 import * as env from '@/env';
 
-const kmdclient = new algosdk.Kmd(env.KMD_TOKEN, env.SERVER, env.KMD_PORT);
+const kmdclient = new algosdk.Kmd(env.TOKEN, env.SERVER, env.KMD_PORT);
 
 // Paste <account-menmonic>
 const mdkMn =
