@@ -1,21 +1,15 @@
-import * as algosdk from 'algosdk';
+import { accountB, algodClient, algosdk } from '@/utils/helper';
 
-import * as env from '@/env';
 import pressKey from '@/utils/pressKey';
 
-const algodClient = new algosdk.Algodv2(env.TOKEN, env.SERVER, env.ALGOD_PORT);
-
-const defaultAddress =
-  'OG3FNPVGFB6S5UTN5BMDHNHVX24PM4XGQLXAU7T56MN3NENGUY64X4AXDI';
-
-const accountA = algosdk.generateAccount();
-const accountB = algosdk.generateAccount();
-const accountC = algosdk.generateAccount();
+const account1 = algosdk.generateAccount();
+const account2 = algosdk.generateAccount();
+const account3 = algosdk.generateAccount();
 
 const mparams = {
   version: 1,
   threshold: 2,
-  addrs: [accountA.addr, accountB.addr, accountC.addr],
+  addrs: [account1.addr, account2.addr, account3.addr],
 };
 
 const multisigAddr = algosdk.multisigAddress(mparams);
@@ -24,7 +18,7 @@ console.log('Multisig Address: ' + multisigAddr);
 const sendFund = async () => {
   console.log('Run the following command');
   console.log(
-    `./sandbox goal clerk send -f ${defaultAddress}  -t ${multisigAddr} -a 2000000`
+    `./sandbox goal clerk send -f ${accountB.addr}  -t ${multisigAddr} -a 2000000`
   );
   await pressKey();
 };
@@ -33,7 +27,7 @@ const submitMultisig = async () => {
   // get suggested params from the network
   const params = await algodClient.getTransactionParams().do();
 
-  const receiver = accountC.addr;
+  const receiver = account3.addr;
 
   const txn = algosdk.makePaymentTxnWithSuggestedParams(
     multisigAddr,
@@ -50,13 +44,13 @@ const submitMultisig = async () => {
   const rawSignedTxn = algosdk.signMultisigTransaction(
     txn,
     mparams,
-    accountA.sk
+    account1.sk
   ).blob;
   //sign with second account
   const twosigs = algosdk.appendSignMultisigTransaction(
     rawSignedTxn,
     mparams,
-    accountB.sk
+    account2.sk
   ).blob;
   //submit the transaction
   await algodClient.sendRawTransaction(twosigs).do();
