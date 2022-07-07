@@ -52,15 +52,15 @@ const createAsset = async () => {
 
   const rawSignedTxn = txn.signTxn(accountA.sk);
   const tx = await algodClient.sendRawTransaction(rawSignedTxn).do();
-  const ptx = await algosdk.waitForConfirmation(algodClient, tx.txId, 4);
+  const ctx = await algosdk.waitForConfirmation(algodClient, tx.txId, 4);
 
   console.log(
-    'Transaction ' + tx.txId + ' confirmed in round ' + ptx['confirmed-round']
+    'Transaction ' + tx.txId + ' confirmed in round ' + ctx['confirmed-round']
   );
 
-  const assetIndex = ptx['asset-index'];
+  const assetIndex = ctx['asset-index'];
 
-  printCreatedAsset(accountA.addr, assetIndex);
+  await printCreatedAsset(accountA.addr, assetIndex);
 
   return assetIndex;
 };
