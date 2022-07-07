@@ -758,7 +758,11 @@ declare module 'algosdk' {
     client: Algodv2,
     txid: string,
     waitRounds: number
-  ): Promise<Record<string, any>>;
+  ): Promise<{
+    'confirmed-round': number;
+    'asset-index';
+    number;
+  }>;
 
   export namespace ERROR_INVALID_MICROALGOS {
     const message: string;
