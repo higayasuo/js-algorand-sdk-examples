@@ -1,9 +1,9 @@
 import { accountA, accountB, algodClient, algosdk } from '@/utils/helper';
+import printCreatedAsset from './printCreatedAsset';
 
 const createAsset = async () => {
   const params = await algodClient.getTransactionParams().do();
 
-  const addr = accountA.addr;
   // Whether user accounts will need to be unfrozen before transacting
   const defaultFrozen = false;
   // integer number of decimals for asset unit calculation
@@ -34,7 +34,7 @@ const createAsset = async () => {
 
   // signing and sending "txn" allows "addr" to create an asset
   const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-    addr,
+    accountA.addr,
     undefined,
     totalIssuance,
     decimals,
@@ -52,15 +52,17 @@ const createAsset = async () => {
 
   const rawSignedTxn = txn.signTxn(accountA.sk);
   const tx = await algodClient.sendRawTransaction(rawSignedTxn).do();
-
-  // wait for transaction to be confirmed
   const ptx = await algosdk.waitForConfirmation(algodClient, tx.txId, 4);
-  //Get the completed Transaction
+
   console.log(
     'Transaction ' + tx.txId + ' confirmed in round ' + ptx['confirmed-round']
   );
 
-  return ptx['asset-index'];
+  const assetIndex = ptx['asset-index'];
+
+  printCreatedAsset(accountA.addr, assetIndex);
+
+  return assetIndex;
 };
 
 export default createAsset;

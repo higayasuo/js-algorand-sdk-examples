@@ -494,162 +494,162 @@ declare module 'algosdk' {
   ): any;
 
   export function makeAssetConfigTxn(
-    from: any,
-    fee: any,
-    firstRound: any,
-    lastRound: any,
-    note: any,
-    genesisHash: any,
-    genesisID: any,
-    assetIndex: any,
-    manager: any,
-    reserve: any,
-    freeze: any,
-    clawback: any,
+    from: string,
+    fee: string,
+    firstRound: number,
+    lastRound: number,
+    note?: any,
+    genesisHash: string,
+    genesisID: string,
+    assetIndex: number,
+    manager: string,
+    reserve: string,
+    freeze: string,
+    clawback: string,
     strictEmptyAddressChecking?: any
-  ): any;
+  ): Transaction;
 
   export function makeAssetConfigTxnWithSuggestedParams(
-    from: any,
-    note: any,
-    assetIndex: any,
-    manager: any,
-    reserve: any,
-    freeze: any,
-    clawback: any,
-    suggestedParams: any,
+    from: string,
+    note?: string,
+    assetIndex: number,
+    manager: string,
+    reserve: string,
+    freeze: string,
+    clawback: string,
+    suggestedParams: SuggestedParams,
     strictEmptyAddressChecking?: any
-  ): any;
+  ): Transaction;
 
   export function makeAssetCreateTxn(
-    from: any,
-    fee: any,
-    firstRound: any,
-    lastRound: any,
-    note: any,
-    genesisHash: any,
-    genesisID: any,
-    total: any,
-    decimals: any,
-    defaultFrozen: any,
-    manager: any,
-    reserve: any,
-    freeze: any,
-    clawback: any,
-    unitName: any,
-    assetName: any,
-    assetURL: any,
-    assetMetadataHash: any
-  ): any;
+    from: string,
+    fee: number,
+    firstRound: number,
+    lastRound: number,
+    note?: any,
+    genesisHash: string,
+    genesisID: string,
+    total: number,
+    decimals: number,
+    defaultFrozen: boolean,
+    manager: string,
+    reserve: string,
+    freeze: string,
+    clawback: string,
+    unitName: string,
+    assetName: string,
+    assetURL: string,
+    assetMetadataHash?: string
+  ): Transaction;
 
   export function makeAssetCreateTxnWithSuggestedParams(
-    from: any,
-    note: any,
-    total: any,
-    decimals: any,
-    defaultFrozen: any,
-    manager: any,
-    reserve: any,
-    freeze: any,
-    clawback: any,
-    unitName: any,
-    assetName: any,
-    assetURL: any,
-    assetMetadataHash: any,
-    suggestedParams: any
+    from: string,
+    note?: any,
+    total: number,
+    decimals: number,
+    defaultFrozen: boolean,
+    manager: string,
+    reserve: string,
+    freeze: string,
+    clawback: string,
+    unitName: string,
+    assetName: string,
+    assetURL: string,
+    assetMetadataHash?: string,
+    suggestedParams: SuggestedParams
   ): Transaction;
 
   export function makeAssetDestroyTxn(
-    from: any,
-    fee: any,
-    firstRound: any,
-    lastRound: any,
-    note: any,
-    genesisHash: any,
-    genesisID: any,
-    assetIndex: any
-  ): any;
+    from: string,
+    fee: number,
+    firstRound?: number,
+    lastRound?: number,
+    note?: any,
+    genesisHash: string,
+    genesisID: string,
+    assetIndex: number
+  ): Transaction;
 
   export function makeAssetDestroyTxnWithSuggestedParams(
-    from: any,
-    note: any,
-    assetIndex: any,
-    suggestedParams: any
-  ): any;
+    from: string,
+    note?: any,
+    assetIndex: number,
+    suggestedParams: SuggestedParams
+  ): Transaction;
 
   export function makeAssetFreezeTxn(
-    from: any,
-    fee: any,
-    firstRound: any,
-    lastRound: any,
-    note: any,
-    genesisHash: any,
-    genesisID: any,
-    assetIndex: any,
+    from: string,
+    fee: number,
+    firstRound: number,
+    lastRound: number,
+    note?: any,
+    genesisHash: string,
+    genesisID: string,
+    assetIndex: number,
     freezeTarget: any,
     freezeState: any
-  ): any;
+  ): Transaction;
 
   export function makeAssetFreezeTxnWithSuggestedParams(
-    from: any,
-    note: any,
-    assetIndex: any,
+    from: string,
+    note?: any,
+    assetIndex: number,
     freezeTarget: any,
     freezeState: any,
-    suggestedParams: any
-  ): any;
+    suggestedParams: SuggestedParams
+  ): Transaction;
 
   export function makeAssetTransferTxn(
-    from: any,
-    to: any,
-    closeRemainderTo: any,
+    from: string,
+    to: string,
+    closeRemainderTo?: string,
     revocationTarget: any,
-    fee: any,
-    amount: any,
-    firstRound: any,
-    lastRound: any,
-    note: any,
-    genesisHash: any,
-    genesisID: any,
-    assetIndex: any
-  ): any;
+    fee: number,
+    amount: number,
+    firstRound?: number,
+    lastRound?: number,
+    note?: any,
+    genesisHash: string,
+    genesisID: string,
+    assetIndex: number
+  ): Transaction;
 
   export function makeAssetTransferTxnWithSuggestedParams(
-    from: any,
-    to: any,
-    closeRemainderTo: any,
+    from: string,
+    to: string,
+    closeRemainderTo?: string,
     revocationTarget: any,
-    amount: any,
-    note: any,
-    assetIndex: any,
-    suggestedParams: any
-  ): any;
+    amount: number,
+    note?: any,
+    assetIndex: number,
+    suggestedParams: SuggestedParams
+  ): Transaction;
 
   export function makeKeyRegistrationTxn(
-    from: any,
-    fee: any,
-    firstRound: any,
-    lastRound: any,
-    note: any,
-    genesisHash: any,
-    genesisID: any,
+    from: string,
+    fee: number,
+    firstRound?: number,
+    lastRound?: number,
+    note?: any,
+    genesisHash: string,
+    genesisID: string,
     voteKey: any,
     selectionKey: any,
     voteFirst: any,
     voteLast: any,
     voteKeyDilution: any
-  ): any;
+  ): Transaction;
 
   export function makeKeyRegistrationTxnWithSuggestedParams(
-    from: any,
-    note: any,
+    from: string,
+    note?: any,
     voteKey: any,
     selectionKey: any,
     voteFirst: any,
     voteLast: any,
     voteKeyDilution: any,
-    suggestedParams: any
-  ): any;
+    suggestedParams: SuggestedParams
+  ): Transaction;
 
   export function makeLogicSig(
     program: Uint8Array,
@@ -760,8 +760,7 @@ declare module 'algosdk' {
     waitRounds: number
   ): Promise<{
     'confirmed-round': number;
-    'asset-index';
-    number;
+    'asset-index': number;
   }>;
 
   export namespace ERROR_INVALID_MICROALGOS {
