@@ -2,6 +2,8 @@ import { accountC, algodClient, algosdk, sendTxnAndWait } from '@/utils/helper';
 import printAssetHolding from './printAssetHolding';
 
 const optinAsset = async (assetIndex: number) => {
+  console.log('Opt-in asset:', accountC.addr);
+
   const params = await algodClient.getTransactionParams().do();
 
   const sender = accountC.addr;

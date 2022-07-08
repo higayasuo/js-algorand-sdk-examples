@@ -8,6 +8,8 @@ import {
 import printCreatedAsset from './printCreatedAsset';
 
 const modifyAsset = async (assetIndex: number) => {
+  console.log('Modify asset');
+
   const params = await algodClient.getTransactionParams().do();
 
   const manager = accountA.addr;

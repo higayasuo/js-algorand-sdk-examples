@@ -1,6 +1,8 @@
 import createAsset from './createAsset';
+import freezeAsset from './freezeAsset';
 import modifyAsset from './modifyAsset';
 import optinAsset from './optinAsset';
+import revokeAsset from './revokeAsset';
 import transferAsset from './transferAsset';
 
 const main = async () => {
@@ -8,6 +10,8 @@ const main = async () => {
   await modifyAsset(assetIndex);
   await optinAsset(assetIndex);
   await transferAsset(assetIndex);
+  await freezeAsset(assetIndex);
+  await revokeAsset(assetIndex);
 };
 
 (async () => {

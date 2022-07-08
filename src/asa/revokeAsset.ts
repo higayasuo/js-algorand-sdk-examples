@@ -1,5 +1,6 @@
 import {
   accountA,
+  accountB,
   accountC,
   algodClient,
   algosdk,
@@ -8,19 +9,20 @@ import {
 import printAssetHolding from './printAssetHolding';
 
 const transferAsset = async (assetIndex: number) => {
-  console.log('Transfer asset:', accountC.addr);
+  console.log('Revoke asset:', accountC.addr);
 
   const params = await algodClient.getTransactionParams().do();
 
-  const sender = accountA.addr;
-  const receiver = accountC.addr;
+  const sender = accountB.addr;
+  const receiver = accountA.addr;
+  const revocationTarget = accountC.addr;
   const amount = 10;
 
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
     sender,
     receiver,
     undefined,
-    undefined,
+    revocationTarget,
     amount,
     undefined,
     assetIndex,

@@ -590,8 +590,8 @@ declare module 'algosdk' {
     from: string,
     note?: any,
     assetIndex: number,
-    freezeTarget: any,
-    freezeState: any,
+    freezeTarget: string,
+    freezeState: boolean,
     suggestedParams: SuggestedParams
   ): Transaction;
 

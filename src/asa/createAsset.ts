@@ -8,6 +8,8 @@ import {
 import printCreatedAsset from './printCreatedAsset';
 
 const createAsset = async () => {
+  console.log('Create aseet');
+
   const params = await algodClient.getTransactionParams().do();
 
   // Whether user accounts will need to be unfrozen before transacting
