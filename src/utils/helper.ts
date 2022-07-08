@@ -28,3 +28,32 @@ const MN3 =
 export const accountA = algosdk.mnemonicToSecretKey(MN1);
 export const accountB = algosdk.mnemonicToSecretKey(MN2);
 export const accountC = algosdk.mnemonicToSecretKey(MN3);
+
+export const sendRawTxnAndWait = async (
+  signedTxn: Uint8Array | Uint8Array[]
+) => {
+  const txResult = await algodClient.sendRawTransaction(signedTxn).do();
+  const ctxResult = await algosdk.waitForConfirmation(
+    algodClient,
+    txResult.txId,
+    10
+  );
+
+  console.log(
+    'Transaction ' +
+      txResult.txId +
+      ' confirmed in round ' +
+      ctxResult['confirmed-round']
+  );
+
+  return ctxResult;
+};
+
+export const sendTxnAndWait = async (
+  txn: algosdk.Transaction,
+  sk: Uint8Array
+) => {
+  const signedTx = txn.signTxn(sk);
+
+  return sendRawTxnAndWait(signedTx);
+};

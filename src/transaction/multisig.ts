@@ -1,4 +1,9 @@
-import { accountB, algodClient, algosdk } from '@/utils/helper';
+import {
+  accountB,
+  algodClient,
+  algosdk,
+  sendRawTxnAndWait,
+} from '@/utils/helper';
 
 import pressKey from '@/utils/pressKey';
 
@@ -6,17 +11,17 @@ const account1 = algosdk.generateAccount();
 const account2 = algosdk.generateAccount();
 const account3 = algosdk.generateAccount();
 
-const mparams = {
+const maccount: algosdk.MultiSigAccount = {
   version: 1,
   threshold: 2,
   addrs: [account1.addr, account2.addr, account3.addr],
 };
 
-const multisigAddr = algosdk.multisigAddress(mparams);
+const multisigAddr = algosdk.multisigAddress(maccount);
 console.log('Multisig Address: ' + multisigAddr);
 
 const sendFund = async () => {
-  console.log('Run the following command');
+  console.log('Run the following command and enter the line feed code');
   console.log(
     `./sandbox goal clerk send -f ${accountB.addr}  -t ${multisigAddr} -a 2000000`
   );
@@ -37,30 +42,19 @@ const submitMultisig = async () => {
     undefined,
     params
   );
-  const txId = txn.txID().toString();
-  // console.log('Transaction : ' + txId);
-  // Sign with first signature
 
-  const rawSignedTxn = algosdk.signMultisigTransaction(
+  const signedTxnBlob = algosdk.signMultisigTransaction(
     txn,
-    mparams,
+    maccount,
     account1.sk
   ).blob;
-  //sign with second account
-  const twosigs = algosdk.appendSignMultisigTransaction(
-    rawSignedTxn,
-    mparams,
+  const twoSignedTxnBlob = algosdk.appendSignMultisigTransaction(
+    signedTxnBlob,
+    maccount,
     account2.sk
   ).blob;
-  //submit the transaction
-  await algodClient.sendRawTransaction(twosigs).do();
 
-  // Wait for transaction to be confirmed
-  const confirmedTxn = await algosdk.waitForConfirmation(algodClient, txId, 40);
-  //Get the completed Transaction
-  console.log(
-    `Transaction ${txId} confirmed in round ${confirmedTxn['confirmed-round']}`
-  );
+  await sendRawTxnAndWait(twoSignedTxnBlob);
 };
 
 const main = async () => {

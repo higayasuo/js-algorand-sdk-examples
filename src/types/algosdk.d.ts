@@ -26,7 +26,7 @@ declare module 'algosdk' {
 
     sendRawTransaction(rawSignedTxn: TxnBytes | TxnBytes[]): Action<TxResult>;
     getTransactionParams(): Action<SuggestedParams>;
-    pendingTransactionInformation(txId: string): Action<ConfirmedTxInfo>;
+    pendingTransactionInformation(txId: string): Action<ConfirmedTxResult>;
     statusAfterBlock(lastround: number): Action<any>;
     accountInformation(address: string): Action<AccountState>;
     setIntEncoding(method: string): void;
@@ -296,9 +296,9 @@ declare module 'algosdk' {
   export function algosToMicroalgos(algos: any): any;
 
   export function appendSignMultisigTransaction(
-    multisigTxnBlob: any,
-    { version, threshold, addrs }: any,
-    sk: any
+    multisigTxnBlob: Uint8Array,
+    account: MultiSigAccount,
+    sk: Uint8Array
   ): any;
 
   export function assignGroupID(txns: any, from?: any): any;
@@ -338,11 +338,7 @@ declare module 'algosdk' {
    * @param threshold multisig threshold
    * @param addresses array of encoded addresses
    */
-  export function multisigAddress(account: {
-    version: number;
-    threshold: number;
-    addrs: string[];
-  }): string;
+  export function multisigAddress(account: MultiSigAccount): string;
 
   // Calls LogicSig.fromByte
   export function logicSigFromByte(encoded: Uint8Array): LogicSig;
@@ -733,12 +729,12 @@ declare module 'algosdk' {
   ): TxSig;
 
   export function signMultisigTransaction(
-    txn: any,
-    { version, threshold, addrs }: any,
-    sk: any
-  ): any;
+    txn: Transaction,
+    account: MultiSigAccount,
+    sk: Uint8Array
+  ): { blob: Uint8Array };
 
-  export function signTransaction(txn: Transaction, sk: any): any;
+  export function signTransaction(txn: Transaction, sk: Uint8Array): any;
 
   /**
    * verifyBytes takes array of bytes, an address, and a signature and verifies if the signature is correct for the public
@@ -756,12 +752,9 @@ declare module 'algosdk' {
 
   export function waitForConfirmation(
     client: Algodv2,
-    txid: string,
+    txId: string,
     waitRounds: number
-  ): Promise<{
-    'confirmed-round': number;
-    'asset-index': number;
-  }>;
+  ): Promise<ConfirmedTxResult>;
 
   export namespace ERROR_INVALID_MICROALGOS {
     const message: string;
@@ -819,7 +812,7 @@ declare module 'algosdk' {
     txId: string;
   }
 
-  export interface ConfirmedTxInfo {
+  export interface ConfirmedTxResult {
     'confirmed-round': number;
     'asset-index': number;
     'application-index': number;

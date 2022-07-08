@@ -1,9 +1,14 @@
 import fs from 'fs';
 
-import { accountA, accountB, algodClient, algosdk } from '@/utils/helper';
+import {
+  accountA,
+  accountB,
+  algodClient,
+  algosdk,
+  sendRawTxnAndWait,
+} from '@/utils/helper';
 
 const submitTransaction = async () => {
-  // get suggested params from the network
   const params = await algodClient.getTransactionParams().do();
 
   const txn = algosdk.makePaymentTxnWithSuggestedParams(
@@ -18,25 +23,10 @@ const submitTransaction = async () => {
   const signedTxn = txn.signTxn(accountA.sk);
   fs.writeFileSync('./signed.stxn', signedTxn);
 
-  // read signed transaction from file
-  const stx = fs.readFileSync('./signed.stxn');
+  const signedTxnFromFile = fs.readFileSync('./signed.stxn');
   fs.unlinkSync('./signed.stxn');
 
-  const tx = await algodClient.sendRawTransaction(stx).do();
-  console.log('Signed transaction with txID: %s', tx.txId);
-  // Wait for confirmation
-  const confirmedTxn = await algosdk.waitForConfirmation(
-    algodClient,
-    tx.txId,
-    4
-  );
-  //Get the completed Transaction
-  console.log(
-    'Transaction ' +
-      tx.txId +
-      ' confirmed in round ' +
-      confirmedTxn['confirmed-round']
-  );
+  await sendRawTxnAndWait(signedTxnFromFile);
 };
 
 const main = async () => {

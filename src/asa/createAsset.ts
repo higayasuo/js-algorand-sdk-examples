@@ -1,4 +1,10 @@
-import { accountA, accountB, algodClient, algosdk } from '@/utils/helper';
+import {
+  accountA,
+  accountB,
+  algodClient,
+  algosdk,
+  sendTxnAndWait,
+} from '@/utils/helper';
 import printCreatedAsset from './printCreatedAsset';
 
 const createAsset = async () => {
@@ -50,14 +56,7 @@ const createAsset = async () => {
     params
   );
 
-  const rawSignedTxn = txn.signTxn(accountA.sk);
-  const tx = await algodClient.sendRawTransaction(rawSignedTxn).do();
-  const ctx = await algosdk.waitForConfirmation(algodClient, tx.txId, 4);
-
-  console.log(
-    'Transaction ' + tx.txId + ' confirmed in round ' + ctx['confirmed-round']
-  );
-
+  const ctx = await sendTxnAndWait(txn, accountA.sk);
   const assetIndex = ctx['asset-index'];
 
   await printCreatedAsset(accountA.addr, assetIndex);
