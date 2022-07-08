@@ -8,7 +8,7 @@ import {
 } from '@/utils/helper';
 import printAssetHolding from './printAssetHolding';
 
-const transferAsset = async (assetIndex: number) => {
+const revokeAsset = async (assetIndex: number) => {
   console.log('Revoke asset:', accountC.addr);
 
   const params = await algodClient.getTransactionParams().do();
@@ -29,8 +29,8 @@ const transferAsset = async (assetIndex: number) => {
     params
   );
 
-  await sendTxnAndWait(txn, accountA.sk);
+  await sendTxnAndWait(txn, accountB.sk);
   await printAssetHolding(accountC.addr, assetIndex);
 };
 
-export default transferAsset;
+export default revokeAsset;

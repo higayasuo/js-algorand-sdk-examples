@@ -12,13 +12,14 @@ const modifyAsset = async (assetIndex: number) => {
 
   const params = await algodClient.getTransactionParams().do();
 
+  const sender = accountB.addr;
   const manager = accountA.addr;
   const reserve = accountB.addr;
   const freeze = accountB.addr;
   const clawback = accountB.addr;
 
   const txn = algosdk.makeAssetConfigTxnWithSuggestedParams(
-    accountB.addr,
+    sender,
     undefined,
     assetIndex,
     manager,
@@ -28,7 +29,7 @@ const modifyAsset = async (assetIndex: number) => {
     params
   );
 
-  await sendTxnAndWait(txn, accountA.sk);
+  await sendTxnAndWait(txn, accountB.sk);
   await printCreatedAsset(accountA.addr, assetIndex);
 };
 
