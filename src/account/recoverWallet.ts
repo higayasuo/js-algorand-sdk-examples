@@ -1,10 +1,14 @@
-import { algosdk, kmdClient, TEST_PASSWORD, WALLET1 } from '@/utils/helper';
+import * as algosdk from 'algosdk';
+import { createKmdClient } from '@/utils/helper';
+
+import { WALLET1, TEST_PASSWORD } from './constants';
 
 // Paste <account-menmonic>
 const mdkMn =
-  'broken weather speak culture price regular army subway grape dentist desert gadget sick hollow kitten charge crucial crunch expect focus visit caught spare above robot';
+  'harsh lounge usage security gate night erase guilt credit collect grace bunker broccoli middle tell prefer nerve audit render want grape lumber surprise ability talk';
 
 (async () => {
+  const kmdClient = createKmdClient();
   const mdk = await algosdk.mnemonicToMasterDerivationKey(mdkMn);
 
   const walletid = (await kmdClient.createWallet(WALLET1, TEST_PASSWORD, mdk))

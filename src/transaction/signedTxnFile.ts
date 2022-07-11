@@ -1,14 +1,16 @@
 import fs from 'fs';
 
+import * as algosdk from 'algosdk';
+
 import {
   accountA,
   accountB,
-  algodClient,
-  algosdk,
+  createAlgodClient,
   sendRawTxnAndWait,
 } from '@/utils/helper';
 
-const submitTransaction = async () => {
+const main = async () => {
+  const algodClient = createAlgodClient();
   const params = await algodClient.getTransactionParams().do();
 
   const txn = algosdk.makePaymentTxnWithSuggestedParams(
@@ -26,11 +28,7 @@ const submitTransaction = async () => {
   const signedTxnFromFile = fs.readFileSync('./signed.stxn');
   fs.unlinkSync('./signed.stxn');
 
-  await sendRawTxnAndWait(signedTxnFromFile);
-};
-
-const main = async () => {
-  await submitTransaction();
+  await sendRawTxnAndWait(algodClient, signedTxnFromFile);
 };
 
 (async () => {

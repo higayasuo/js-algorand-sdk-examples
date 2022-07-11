@@ -1,6 +1,7 @@
-import { algodClient } from '@/utils/helper';
+import { createAlgodClient } from '@/utils/helper';
 
 const printAssetHolding = async (address: string, assetid: number) => {
+  const algodClient = createAlgodClient();
   const info = await algodClient.accountInformation(address).do();
 
   info['assets'].forEach((asset) => {

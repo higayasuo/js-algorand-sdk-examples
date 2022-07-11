@@ -1,8 +1,9 @@
+import * as algosdk from 'algosdk';
+
 import {
   accountA,
   accountB,
-  algodClient,
-  algosdk,
+  createAlgodClient,
   sendTxnAndWait,
 } from '@/utils/helper';
 import printCreatedAsset from './printCreatedAsset';
@@ -10,37 +11,21 @@ import printCreatedAsset from './printCreatedAsset';
 const createAsset = async () => {
   console.log('Create aseet');
 
+  const algodClient = createAlgodClient();
   const params = await algodClient.getTransactionParams().do();
 
-  // Whether user accounts will need to be unfrozen before transacting
   const defaultFrozen = false;
-  // integer number of decimals for asset unit calculation
   const decimals = 0;
-  // total number of this asset available for circulation
   const totalIssuance = 1000;
-  // Used to display asset units to user
   const unitName = 'LATINUM';
-  // Friendly name of the asset
   const assetName = 'latinum';
-  // Optional string pointing to a URL relating to the asset
   const assetURL = 'http://someurl';
-  // Optional hash commitment of some sort relating to the asset. 32 character length.
   const assetMetadataHash = '16efaa3924a6fd9d3a4824799a4ac65d';
-  // The following parameters are the only ones
-  // that can be changed, and they have to be changed
-  // by the current manager
-  // Specified address can change reserve, freeze, clawback, and manager
   const manager = accountB.addr;
-  // Specified address is considered the asset reserve
-  // (it has no special privileges, this is only informational)
   const reserve = accountB.addr;
-  // Specified address can freeze or unfreeze user asset holdings
   const freeze = accountB.addr;
-  // Specified address can revoke user asset holdings and send
-  // them to other addresses
   const clawback = accountB.addr;
 
-  // signing and sending "txn" allows "addr" to create an asset
   const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
     accountA.addr,
     undefined,
@@ -58,7 +43,7 @@ const createAsset = async () => {
     params
   );
 
-  const ctx = await sendTxnAndWait(txn, accountA.sk);
+  const ctx = await sendTxnAndWait(algodClient, txn, accountA.sk);
   const assetIndex = ctx['asset-index'];
 
   await printCreatedAsset(accountA.addr, assetIndex);

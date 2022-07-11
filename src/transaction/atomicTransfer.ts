@@ -1,13 +1,15 @@
+import * as algosdk from 'algosdk';
+
 import {
   accountA,
   accountB,
   accountC,
-  algodClient,
-  algosdk,
+  createAlgodClient,
   sendRawTxnAndWait,
 } from '@/utils/helper';
 
-const submitAtomicTransfer = async () => {
+const main = async () => {
+  const algodClient = createAlgodClient();
   const params = await algodClient.getTransactionParams().do();
 
   const txn1 = algosdk.makePaymentTxnWithSuggestedParams(
@@ -28,19 +30,12 @@ const submitAtomicTransfer = async () => {
     params
   );
 
-  const txns = [txn1, txn2];
-
-  algosdk.assignGroupID(txns);
+  algosdk.assignGroupID([txn1, txn2]);
 
   const signedTxn1 = txn1.signTxn(accountA.sk);
   const signedTxn2 = txn2.signTxn(accountB.sk);
-  const signedTxns = [signedTxn1, signedTxn2];
 
-  await sendRawTxnAndWait(signedTxns);
-};
-
-const main = async () => {
-  await submitAtomicTransfer();
+  await sendRawTxnAndWait(algodClient, [signedTxn1, signedTxn2]);
 };
 
 (async () => {

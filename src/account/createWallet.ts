@@ -1,8 +1,12 @@
-import { algosdk, kmdClient, TEST_PASSWORD } from '@/utils/helper';
+import * as algosdk from 'algosdk';
 
-import { WALLET1 } from '@/constants';
+import { createKmdClient } from '@/utils/helper';
 
-(async () => {
+import { WALLET1, TEST_PASSWORD } from './constants';
+
+const main = async () => {
+  const kmdClient = createKmdClient();
+
   const walletid = (await kmdClient.createWallet(WALLET1, TEST_PASSWORD)).wallet
     .id;
   console.log('Wallet:', walletid);
@@ -10,7 +14,7 @@ import { WALLET1 } from '@/constants';
   const wallethandle = (
     await kmdClient.initWalletHandle(walletid, TEST_PASSWORD)
   ).wallet_handle_token;
-  console.log('Wallet handle:', wallethandle);
+  console.log("Wallet handle:", wallethandle);
 
   const mdk = (
     await kmdClient.exportMasterDerivationKey(wallethandle, TEST_PASSWORD)
@@ -20,4 +24,14 @@ import { WALLET1 } from '@/constants';
 
   const address = (await kmdClient.generateKey(wallethandle)).address;
   console.log('Created new account:', address);
-})().catch(console.error);
+};
+
+if (require.main === module) {
+  (async () => {
+    await main();
+    process.exit(0);
+  })().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

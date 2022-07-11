@@ -1,9 +1,6 @@
-import {
-  accountB,
-  algodClient,
-  algosdk,
-  sendRawTxnAndWait,
-} from '@/utils/helper';
+import * as algosdk from 'algosdk';
+
+import { accountB, createAlgodClient, sendRawTxnAndWait } from '@/utils/helper';
 
 import pressKey from '@/utils/pressKey';
 
@@ -29,7 +26,7 @@ const sendFund = async () => {
 };
 
 const submitMultisig = async () => {
-  // get suggested params from the network
+  const algodClient = createAlgodClient();
   const params = await algodClient.getTransactionParams().do();
 
   const receiver = account3.addr;
@@ -54,7 +51,7 @@ const submitMultisig = async () => {
     account2.sk
   ).blob;
 
-  await sendRawTxnAndWait(twoSignedTxnBlob);
+  await sendRawTxnAndWait(algodClient, twoSignedTxnBlob);
 };
 
 const main = async () => {

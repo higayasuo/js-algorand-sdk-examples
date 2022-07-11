@@ -1,8 +1,9 @@
+import * as algosdk from 'algosdk';
+
 import {
   accountB,
   accountC,
-  algodClient,
-  algosdk,
+  createAlgodClient,
   sendTxnAndWait,
 } from '@/utils/helper';
 import printAssetHolding from './printAssetHolding';
@@ -10,6 +11,7 @@ import printAssetHolding from './printAssetHolding';
 const freezeAsset = async (assetIndex: number) => {
   console.log('Freeze asset:', accountC.addr);
 
+  const algodClient = createAlgodClient();
   const params = await algodClient.getTransactionParams().do();
 
   const sender = accountB.addr;
@@ -25,7 +27,7 @@ const freezeAsset = async (assetIndex: number) => {
     params
   );
 
-  await sendTxnAndWait(txn, accountB.sk);
+  await sendTxnAndWait(algodClient, txn, accountB.sk);
   await printAssetHolding(accountC.addr, assetIndex);
 };
 
