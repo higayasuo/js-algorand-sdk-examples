@@ -6,7 +6,6 @@ services:
     volumes:
       - .:/app:cached
       - extensions:/hoge/node/.vscode-server/extensions
-    working_dir: /app
     network_mode: host
     tty: true
 volumes:
