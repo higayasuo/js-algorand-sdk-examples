@@ -17,7 +17,7 @@ declare module 'algosdk' {
     constructor(
       token: string,
       baseServer: string,
-      port: number,
+      port?: number,
       headers?: object
     );
 

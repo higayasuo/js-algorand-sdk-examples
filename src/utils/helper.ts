@@ -1,11 +1,12 @@
 import * as algosdk from 'algosdk';
 
-export const SERVER = 'http://localhost';
-export const TOKEN =
+const SERVER = 'http://localhost';
+const TESTNET_SERVER = 'https://api.testnet.algoexplorer.io';
+const TOKEN =
   'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
-export const ALGOD_PORT = 4001;
-export const KMD_PORT = 4002;
+const ALGOD_PORT = 4001;
+const KMD_PORT = 4002;
 
 const MN1 =
   'birth april scatter wide stool resist song hobby unaware rabbit marine convince goat planet exhaust size visual cupboard squirrel isolate obvious will tennis about maple';
@@ -22,6 +23,10 @@ export const accountC = algosdk.mnemonicToSecretKey(MN3);
 
 export const createAlgodClient = () => {
   return new algosdk.Algodv2(TOKEN, SERVER, ALGOD_PORT);
+};
+
+export const createTestnetAlgodClient = () => {
+  return new algosdk.Algodv2('', TESTNET_SERVER);
 };
 
 export const createKmdClient = () => {
@@ -58,3 +63,19 @@ export const sendTxnAndWait = async (
 
   return sendRawTxnAndWait(algodClient, signedTx);
 };
+
+const main = async () => {
+  const algodClient = createTestnetAlgodClient();
+
+  console.log(algodClient.status());
+};
+
+if (require.main === module) {
+  (async () => {
+    await main();
+    process.exit(0);
+  })().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}
