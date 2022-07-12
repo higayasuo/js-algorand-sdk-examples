@@ -1,7 +1,17 @@
 import 'dotenv/config';
+import pinatasdk from '@pinata/sdk';
+
+export const getPinata = () => {
+  return pinatasdk(
+    process.env.PINATA_API_KEY || '',
+    process.env.PINATA_API_SECRET || ''
+  );
+};
 
 const main = async () => {
-  console.log(process.env.AAA, process.env.BBB);
+  const pinata = getPinata();
+
+  console.log(await pinata.testAuthentication());
 };
 
 if (require.main === module) {
