@@ -6,7 +6,7 @@ import {
   accountC,
   createAlgodClient,
   sendTxnAndWait,
-} from '@/utils/helper';
+} from '@/utils/algoHelper';
 import printAssetHolding from './printAssetHolding';
 
 const revokeAsset = async (assetIndex: number) => {

@@ -1,6 +1,6 @@
 import * as algosdk from 'algosdk';
 
-import { createKmdClient } from '@/utils/helper';
+import { createKmdClient } from '@/utils/algoHelper';
 
 import { WALLET1, TEST_PASSWORD } from './constants';
 
@@ -9,12 +9,10 @@ const main = async () => {
 
   const walletid = (await kmdClient.createWallet(WALLET1, TEST_PASSWORD)).wallet
     .id;
-  console.log('Wallet:', walletid);
 
   const wallethandle = (
     await kmdClient.initWalletHandle(walletid, TEST_PASSWORD)
   ).wallet_handle_token;
-  console.log("Wallet handle:", wallethandle);
 
   const mdk = (
     await kmdClient.exportMasterDerivationKey(wallethandle, TEST_PASSWORD)

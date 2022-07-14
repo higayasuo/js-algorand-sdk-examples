@@ -1,6 +1,10 @@
 import * as algosdk from 'algosdk';
 
-import { accountB, createAlgodClient, sendRawTxnAndWait } from '@/utils/helper';
+import {
+  accountB,
+  createAlgodClient,
+  sendRawTxnAndWait,
+} from '@/utils/algoHelper';
 
 import pressKey from '@/utils/pressKey';
 

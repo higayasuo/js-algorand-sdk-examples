@@ -1,6 +1,10 @@
 import * as algosdk from 'algosdk';
 
-import { accountC, createAlgodClient, sendTxnAndWait } from '@/utils/helper';
+import {
+  accountC,
+  createAlgodClient,
+  sendTxnAndWait,
+} from '@/utils/algoHelper';
 import printAssetHolding from './printAssetHolding';
 
 const optinAsset = async (assetIndex: number) => {

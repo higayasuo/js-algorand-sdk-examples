@@ -1,7 +1,7 @@
 import { join, dirname } from 'path';
 import fs from 'fs';
 
-import { pinFileToIPFS } from './pinataHelper';
+import { pinFileToIPFS } from '@/utils/pinataHelper';
 import convertCidV0ToHash from '@/utils/convertCidV0ToHash';
 
 const main = async () => {

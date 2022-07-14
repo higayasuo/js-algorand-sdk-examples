@@ -1,4 +1,4 @@
-import { pinJSONToIPFS } from './pinataHelper';
+import { pinJSONToIPFS } from '@/utils/pinataHelper';
 import convertCidV0ToHash from '@/utils/convertCidV0ToHash';
 
 const main = async () => {

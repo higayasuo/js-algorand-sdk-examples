@@ -1,6 +1,10 @@
 import * as algosdk from 'algosdk';
 
-import { accountA, createAlgodClient, sendTxnAndWait } from '@/utils/helper';
+import {
+  accountA,
+  createAlgodClient,
+  sendTxnAndWait,
+} from '@/utils/algoHelper';
 import printCreatedAsset from './printCreatedAsset';
 
 const destroyAsset = async (assetIndex: number) => {

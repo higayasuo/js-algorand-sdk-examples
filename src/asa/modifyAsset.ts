@@ -5,7 +5,7 @@ import {
   accountB,
   createAlgodClient,
   sendTxnAndWait,
-} from '@/utils/helper';
+} from '@/utils/algoHelper';
 import printCreatedAsset from './printCreatedAsset';
 
 const modifyAsset = async (assetIndex: number) => {

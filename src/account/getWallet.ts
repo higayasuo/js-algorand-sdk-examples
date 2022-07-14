@@ -1,4 +1,4 @@
-import { createKmdClient } from '@/utils/helper';
+import { createKmdClient } from '@/utils/algoHelper';
 
 import { WALLET1 } from './constants';
 

@@ -7,7 +7,7 @@ import {
   accountB,
   createAlgodClient,
   sendRawTxnAndWait,
-} from '@/utils/helper';
+} from '@/utils/algoHelper';
 
 const main = async () => {
   const algodClient = createAlgodClient();

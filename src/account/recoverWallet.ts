@@ -1,11 +1,11 @@
 import * as algosdk from 'algosdk';
-import { createKmdClient } from '@/utils/helper';
+import { createKmdClient } from '@/utils/algoHelper';
 
 import { WALLET1, TEST_PASSWORD } from './constants';
 
 // Paste <account-menmonic>
 const mdkMn =
-  'harsh lounge usage security gate night erase guilt credit collect grace bunker broccoli middle tell prefer nerve audit render want grape lumber surprise ability talk';
+  'draw ladder jar segment seminar force spy achieve stage market sun fiction wear devote deliver plate oppose solid acquire elbow hazard clog veteran absorb another';
 
 (async () => {
   const kmdClient = createKmdClient();
@@ -13,7 +13,6 @@ const mdkMn =
 
   const walletid = (await kmdClient.createWallet(WALLET1, TEST_PASSWORD, mdk))
     .wallet.id;
-  console.log('Recovered wallet: ', walletid);
 
   const wallethandle = (
     await kmdClient.initWalletHandle(walletid, TEST_PASSWORD)

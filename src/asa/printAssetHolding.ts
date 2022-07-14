@@ -1,4 +1,4 @@
-import { createAlgodClient } from '@/utils/helper';
+import { createAlgodClient } from '@/utils/algoHelper';
 
 const printAssetHolding = async (address: string, assetid: number) => {
   const algodClient = createAlgodClient();

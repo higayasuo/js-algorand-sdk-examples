@@ -5,7 +5,7 @@ import {
   accountC,
   createAlgodClient,
   sendTxnAndWait,
-} from '@/utils/helper';
+} from '@/utils/algoHelper';
 import printAssetHolding from './printAssetHolding';
 
 const freezeAsset = async (assetIndex: number) => {
