@@ -535,7 +535,7 @@ declare module 'algosdk' {
     unitName: string,
     assetName: string,
     assetURL: string,
-    assetMetadataHash?: string
+    assetMetadataHash?: string | Uint8Array
   ): Transaction;
 
   export function makeAssetCreateTxnWithSuggestedParams(
