@@ -3,7 +3,7 @@ import * as algosdk from 'algosdk';
 import {
   accountA,
   createAlgodClient,
-  sendTxnAndWait,
+  signSendWaitTxn,
 } from '@/utils/algoHelper';
 import printCreatedAsset from './printCreatedAsset';
 
@@ -22,7 +22,7 @@ const destroyAsset = async (assetIndex: number) => {
     params
   );
 
-  await sendTxnAndWait(algodClient, txn, accountA.sk);
+  await signSendWaitTxn(algodClient, txn, accountA.sk);
   await printCreatedAsset(accountA.addr, assetIndex);
 };
 

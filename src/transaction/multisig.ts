@@ -1,10 +1,6 @@
 import * as algosdk from 'algosdk';
 
-import {
-  accountB,
-  createAlgodClient,
-  sendRawTxnAndWait,
-} from '@/utils/algoHelper';
+import { accountB, createAlgodClient, sendWaitTxn } from '@/utils/algoHelper';
 
 import pressKey from '@/utils/pressKey';
 
@@ -55,7 +51,7 @@ const submitMultisig = async () => {
     account2.sk
   ).blob;
 
-  await sendRawTxnAndWait(algodClient, twoSignedTxnBlob);
+  await sendWaitTxn(algodClient, twoSignedTxnBlob);
 };
 
 const main = async () => {

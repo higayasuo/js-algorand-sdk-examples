@@ -509,10 +509,10 @@ declare module 'algosdk' {
     from: string,
     note?: string,
     assetIndex: number,
-    manager: string,
-    reserve: string,
-    freeze: string,
-    clawback: string,
+    manager?: string,
+    reserve?: string,
+    freeze?: string,
+    clawback?: string,
     suggestedParams: SuggestedParams,
     strictEmptyAddressChecking?: any
   ): Transaction;
@@ -522,7 +522,7 @@ declare module 'algosdk' {
     fee: number,
     firstRound: number,
     lastRound: number,
-    note?: any,
+    note?: Uint8Array,
     genesisHash: string,
     genesisID: string,
     total: number,
@@ -540,20 +540,37 @@ declare module 'algosdk' {
 
   export function makeAssetCreateTxnWithSuggestedParams(
     from: string,
-    note?: any,
+    note?: Uint8Array,
     total: number,
     decimals: number,
     defaultFrozen: boolean,
-    manager: string,
-    reserve: string,
-    freeze: string,
-    clawback: string,
+    manager?: string,
+    reserve?: string,
+    freeze?: string,
+    clawback?: string,
     unitName: string,
     assetName: string,
     assetURL: string,
-    assetMetadataHash?: string,
+    assetMetadataHash?: string | Uint8Array,
     suggestedParams: SuggestedParams
   ): Transaction;
+
+  export function makeAssetCreateTxnWithSuggestedParamsFromObject(o: {
+    from: string;
+    note?: Uint8Array;
+    total: number;
+    decimals: number;
+    defaultFrozen: boolean;
+    manager?: string;
+    reserve?: string;
+    freeze?: string;
+    clawback?: string;
+    unitName: string;
+    assetName: string;
+    assetURL: string;
+    assetMetadataHash?: string | Uint8Array;
+    suggestedParams: SuggestedParams;
+  }): Transaction;
 
   export function makeAssetDestroyTxn(
     from: string,

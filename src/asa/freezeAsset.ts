@@ -4,7 +4,7 @@ import {
   accountB,
   accountC,
   createAlgodClient,
-  sendTxnAndWait,
+  signSendWaitTxn,
 } from '@/utils/algoHelper';
 import printAssetHolding from './printAssetHolding';
 
@@ -27,7 +27,7 @@ const freezeAsset = async (assetIndex: number) => {
     params
   );
 
-  await sendTxnAndWait(algodClient, txn, accountB.sk);
+  await signSendWaitTxn(algodClient, txn, accountB.sk);
   await printAssetHolding(accountC.addr, assetIndex);
 };
 

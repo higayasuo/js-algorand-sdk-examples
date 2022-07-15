@@ -5,7 +5,7 @@ import {
   accountB,
   accountC,
   createAlgodClient,
-  sendRawTxnAndWait,
+  sendWaitTxn,
 } from '@/utils/algoHelper';
 
 const main = async () => {
@@ -35,7 +35,7 @@ const main = async () => {
   const signedTxn1 = txn1.signTxn(accountA.sk);
   const signedTxn2 = txn2.signTxn(accountB.sk);
 
-  await sendRawTxnAndWait(algodClient, [signedTxn1, signedTxn2]);
+  await sendWaitTxn(algodClient, [signedTxn1, signedTxn2]);
 };
 
 (async () => {

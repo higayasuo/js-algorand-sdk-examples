@@ -6,7 +6,7 @@ import {
   accountA,
   accountB,
   createAlgodClient,
-  sendRawTxnAndWait,
+  sendWaitTxn,
 } from '@/utils/algoHelper';
 
 const main = async () => {
@@ -28,7 +28,7 @@ const main = async () => {
   const signedTxnFromFile = fs.readFileSync('./signed.stxn');
   fs.unlinkSync('./signed.stxn');
 
-  await sendRawTxnAndWait(algodClient, signedTxnFromFile);
+  await sendWaitTxn(algodClient, signedTxnFromFile);
 };
 
 (async () => {

@@ -3,7 +3,7 @@ import * as algosdk from 'algosdk';
 import {
   accountC,
   createAlgodClient,
-  sendTxnAndWait,
+  signSendWaitTxn,
 } from '@/utils/algoHelper';
 import printAssetHolding from './printAssetHolding';
 
@@ -28,7 +28,7 @@ const optinAsset = async (assetIndex: number) => {
     params
   );
 
-  await sendTxnAndWait(algodClient, txn, accountC.sk);
+  await signSendWaitTxn(algodClient, txn, accountC.sk);
   await printAssetHolding(accountC.addr, assetIndex);
 };
 

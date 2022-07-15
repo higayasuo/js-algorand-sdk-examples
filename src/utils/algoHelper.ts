@@ -1,7 +1,7 @@
 import * as algosdk from 'algosdk';
 
 const SERVER = 'http://localhost';
-const TESTNET_SERVER = 'https://api.testnet.algoexplorer.io';
+const TESTNET_SERVER = 'https://node.testnet.algoexplorerapi.io';
 const TOKEN =
   'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
@@ -26,14 +26,14 @@ export const createAlgodClient = () => {
 };
 
 export const createTestnetAlgodClient = () => {
-  return new algosdk.Algodv2('', TESTNET_SERVER);
+  return new algosdk.Algodv2('', TESTNET_SERVER, 443);
 };
 
 export const createKmdClient = () => {
   return new algosdk.Kmd(TOKEN, SERVER, KMD_PORT);
 };
 
-export const sendRawTxnAndWait = async (
+export const sendWaitTxn = async (
   algodClient: algosdk.Algodv2,
   signedTxn: Uint8Array | Uint8Array[]
 ) => {
@@ -54,20 +54,20 @@ export const sendRawTxnAndWait = async (
   return ctxResult;
 };
 
-export const sendTxnAndWait = async (
+export const signSendWaitTxn = async (
   algodClient: algosdk.Algodv2,
   txn: algosdk.Transaction,
   sk: Uint8Array
 ) => {
-  const signedTx = txn.signTxn(sk);
+  const stxn = txn.signTxn(sk);
 
-  return sendRawTxnAndWait(algodClient, signedTx);
+  return sendWaitTxn(algodClient, stxn);
 };
 
 const main = async () => {
   const algodClient = createTestnetAlgodClient();
 
-  console.log(algodClient.status());
+  console.log(await algodClient.getTransactionParams().do());
 };
 
 if (require.main === module) {

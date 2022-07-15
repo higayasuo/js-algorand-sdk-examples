@@ -1,4 +1,5 @@
 import { Readable } from 'stream';
+import convertCidV0ToHash from './convertCidV0ToHash';
 
 import 'dotenv/config';
 import pinatasdk from '@pinata/sdk';
@@ -21,13 +22,19 @@ export const getPinata = () => {
 export const pinJSONToIPFS = async (body: object) => {
   const pinata = getPinata();
 
-  return pinata.pinJSONToIPFS(body, OPTIONS);
+  const res = await pinata.pinJSONToIPFS(body, OPTIONS);
+  const hash = convertCidV0ToHash(res.IpfsHash);
+
+  return { cid: res.IpfsHash, base64: hash.base64, blob: hash.blob };
 };
 
 export const pinFileToIPFS = async (readable: Readable) => {
   const pinata = getPinata();
 
-  return pinata.pinFileToIPFS(readable, OPTIONS);
+  const res = await pinata.pinFileToIPFS(readable, OPTIONS);
+  const hash = convertCidV0ToHash(res.IpfsHash);
+
+  return { cid: res.IpfsHash, base64: hash.base64, blob: hash.blob };
 };
 
 const main = async () => {

@@ -2,7 +2,6 @@ import { join, dirname } from 'path';
 import fs from 'fs';
 
 import { pinFileToIPFS } from '@/utils/pinataHelper';
-import convertCidV0ToHash from '@/utils/convertCidV0ToHash';
 
 const main = async () => {
   const readable = fs.createReadStream(
@@ -12,8 +11,7 @@ const main = async () => {
   const ret = await pinFileToIPFS(readable);
 
   console.log(ret);
-  console.log(convertCidV0ToHash(ret.IpfsHash));
-  console.log(`https://ipfs.io/ipfs/${ret.IpfsHash}`);
+  console.log(`https://ipfs.io/ipfs/${ret.cid}`);
 };
 
 if (require.main === module) {

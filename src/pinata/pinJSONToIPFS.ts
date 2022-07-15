@@ -9,8 +9,7 @@ const main = async () => {
   const ret = await pinJSONToIPFS(body);
 
   console.log(ret);
-  console.log(convertCidV0ToHash(ret.IpfsHash));
-  console.log(`https://ipfs.io/ipfs/${ret.IpfsHash}`);
+  console.log(`https://ipfs.io/ipfs/${ret.cid}`);
 };
 
 if (require.main === module) {

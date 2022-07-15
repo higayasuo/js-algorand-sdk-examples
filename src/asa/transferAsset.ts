@@ -4,7 +4,7 @@ import {
   accountA,
   accountC,
   createAlgodClient,
-  sendTxnAndWait,
+  signSendWaitTxn,
 } from '@/utils/algoHelper';
 import printAssetHolding from './printAssetHolding';
 
@@ -29,7 +29,7 @@ const transferAsset = async (assetIndex: number) => {
     params
   );
 
-  await sendTxnAndWait(algodClient, txn, accountA.sk);
+  await signSendWaitTxn(algodClient, txn, accountA.sk);
   await printAssetHolding(accountC.addr, assetIndex);
 };
 

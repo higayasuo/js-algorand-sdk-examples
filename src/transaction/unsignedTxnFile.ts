@@ -6,7 +6,7 @@ import {
   accountA,
   accountB,
   createAlgodClient,
-  sendTxnAndWait,
+  signSendWaitTxn,
 } from '@/utils/algoHelper';
 
 const main = async () => {
@@ -29,7 +29,7 @@ const main = async () => {
   );
   fs.unlinkSync('./unsigned.txn');
 
-  await sendTxnAndWait(algodClient, txnFromFile, accountA.sk);
+  await signSendWaitTxn(algodClient, txnFromFile, accountA.sk);
 };
 
 (async () => {
