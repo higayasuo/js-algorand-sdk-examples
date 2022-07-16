@@ -72,10 +72,6 @@ const createNFT = async ({
     assetURL,
     assetMetadataHash,
     defaultFrozen: false,
-    manager: undefined,
-    reserve: undefined,
-    freeze: undefined,
-    clawback: undefined,
     suggestedParams,
   });
 

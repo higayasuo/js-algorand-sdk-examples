@@ -12,36 +12,22 @@ const createAsset = async () => {
   console.log('Create aseet');
 
   const algodClient = createAlgodClient();
-  const params = await algodClient.getTransactionParams().do();
+  const suggestedParams = await algodClient.getTransactionParams().do();
 
-  const defaultFrozen = false;
-  const decimals = 0;
-  const totalIssuance = 1000;
-  const unitName = 'LATINUM';
-  const assetName = 'latinum';
-  const assetURL = 'http://someurl';
-  const assetMetadataHash = '16efaa3924a6fd9d3a4824799a4ac65d';
-  const manager = accountB.addr;
-  const reserve = accountB.addr;
-  const freeze = accountB.addr;
-  const clawback = accountB.addr;
-
-  const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-    accountA.addr,
-    undefined,
-    totalIssuance,
-    decimals,
-    defaultFrozen,
-    manager,
-    reserve,
-    freeze,
-    clawback,
-    unitName,
-    assetName,
-    assetURL,
-    assetMetadataHash,
-    params
-  );
+  const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
+    from: accountA.addr,
+    total: 1000,
+    decimals: 0,
+    defaultFrozen: false,
+    manager: accountB.addr,
+    reserve: accountB.addr,
+    freeze: accountB.addr,
+    clawback: accountB.addr,
+    unitName: 'AAA',
+    assetName: 'AAA',
+    assetURL: 'https://someurl',
+    suggestedParams,
+  });
 
   const ctx = await signSendWaitTxn(algodClient, txn, accountA.sk);
   const assetIndex = ctx['asset-index'];

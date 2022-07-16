@@ -13,23 +13,16 @@ const revokeAsset = async (assetIndex: number) => {
   console.log('Revoke asset:', accountC.addr);
 
   const algodClient = createAlgodClient();
-  const params = await algodClient.getTransactionParams().do();
+  const suggestedParams = await algodClient.getTransactionParams().do();
 
-  const sender = accountB.addr;
-  const receiver = accountA.addr;
-  const revocationTarget = accountC.addr;
-  const amount = 10;
-
-  const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-    sender,
-    receiver,
-    undefined,
-    revocationTarget,
-    amount,
-    undefined,
+  const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+    from: accountB.addr,
+    to: accountA.addr,
+    revocationTarget: accountC.addr,
+    amount: 10,
     assetIndex,
-    params
-  );
+    suggestedParams,
+  });
 
   await signSendWaitTxn(algodClient, txn, accountB.sk);
   await printAssetHolding(accountC.addr, assetIndex);

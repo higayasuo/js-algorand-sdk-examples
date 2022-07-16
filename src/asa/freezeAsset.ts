@@ -12,20 +12,15 @@ const freezeAsset = async (assetIndex: number) => {
   console.log('Freeze asset:', accountC.addr);
 
   const algodClient = createAlgodClient();
-  const params = await algodClient.getTransactionParams().do();
+  const suggestedParams = await algodClient.getTransactionParams().do();
 
-  const sender = accountB.addr;
-  const freezeTarget = accountC.addr;
-  const freezeState = true;
-
-  const txn = algosdk.makeAssetFreezeTxnWithSuggestedParams(
-    sender,
-    undefined,
+  const txn = algosdk.makeAssetFreezeTxnWithSuggestedParamsFromObject({
+    from: accountB.addr,
     assetIndex,
-    freezeTarget,
-    freezeState,
-    params
-  );
+    freezeTarget: accountC.addr,
+    freezeState: true,
+    suggestedParams,
+  });
 
   await signSendWaitTxn(algodClient, txn, accountB.sk);
   await printAssetHolding(accountC.addr, assetIndex);

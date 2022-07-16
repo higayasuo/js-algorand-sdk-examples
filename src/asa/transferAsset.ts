@@ -12,22 +12,15 @@ const transferAsset = async (assetIndex: number) => {
   console.log('Transfer asset:', accountC.addr);
 
   const algodClient = createAlgodClient();
-  const params = await algodClient.getTransactionParams().do();
+  const suggestedParams = await algodClient.getTransactionParams().do();
 
-  const sender = accountA.addr;
-  const receiver = accountC.addr;
-  const amount = 10;
-
-  const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-    sender,
-    receiver,
-    undefined,
-    undefined,
-    amount,
-    undefined,
+  const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+    from: accountA.addr,
+    to: accountC.addr,
+    amount: 10,
     assetIndex,
-    params
-  );
+    suggestedParams,
+  });
 
   await signSendWaitTxn(algodClient, txn, accountA.sk);
   await printAssetHolding(accountC.addr, assetIndex);

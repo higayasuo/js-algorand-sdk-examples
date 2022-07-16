@@ -333,6 +333,46 @@ declare module 'algosdk' {
   export function encodeAddress(a: Uint8Array): string;
 
   /**
+   * encodeUint64 converts an integer to its binary representation.
+   * @param num - The number to convert. This must be an unsigned integer less than
+   *   2^64.
+   * @returns An 8-byte typed array containing the big-endian encoding of the input
+   *   integer.
+   */
+  export declare function encodeUint64(num: number | bigint): Uint8Array;
+  /**
+   * decodeUint64 produces an integer from a binary representation.
+   * @param data - An typed array containing the big-endian encoding of an unsigned integer
+   *   less than 2^64. This array must be at most 8 bytes long.
+   * @param decodingMode - Configure how the integer will be
+   *   decoded.
+   *
+   *   The options are:
+   *   * "safe": The integer will be decoded as a Number, but if it is greater than
+   *     Number.MAX_SAFE_INTEGER an error will be thrown.
+   *   * "mixed": The integer will be decoded as a Number if it is less than or equal to
+   *     Number.MAX_SAFE_INTEGER, otherwise it will be decoded as a BigInt.
+   *   * "bigint": The integer will always be decoded as a BigInt.
+   *
+   *   Defaults to "safe" if not included.
+   * @returns The integer that was encoded in the input data. The return type will
+   *   be determined by the parameter decodingMode.
+   */
+  export declare function decodeUint64(data: Uint8Array): number;
+  export declare function decodeUint64(
+    data: Uint8Array,
+    decodingMode: 'safe'
+  ): number;
+  export declare function decodeUint64(
+    data: Uint8Array,
+    decodingMode: 'mixed'
+  ): number | bigint;
+  export declare function decodeUint64(
+    data: Uint8Array,
+    decodingMode: 'bigint'
+  ): bigint;
+
+  /**
    * multisigAddress takes multisig metadata (preimage) and returns the corresponding human readable Algorand address.
    * @param version mutlisig version
    * @param threshold multisig threshold
@@ -494,7 +534,7 @@ declare module 'algosdk' {
     fee: string,
     firstRound: number,
     lastRound: number,
-    note?: any,
+    note?: Uint8Array,
     genesisHash: string,
     genesisID: string,
     assetIndex: number,
@@ -502,20 +542,32 @@ declare module 'algosdk' {
     reserve: string,
     freeze: string,
     clawback: string,
-    strictEmptyAddressChecking?: any
+    strictEmptyAddressChecking?: boolean
   ): Transaction;
 
   export function makeAssetConfigTxnWithSuggestedParams(
     from: string,
-    note?: string,
+    note?: Uint8Array,
     assetIndex: number,
     manager?: string,
     reserve?: string,
     freeze?: string,
     clawback?: string,
     suggestedParams: SuggestedParams,
-    strictEmptyAddressChecking?: any
+    strictEmptyAddressChecking?: boolean
   ): Transaction;
+
+  export function makeAssetConfigTxnWithSuggestedParamsFromObject(o: {
+    from: string;
+    note?: Uint8Array;
+    assetIndex: number;
+    manager?: string;
+    reserve?: string;
+    freeze?: string;
+    clawback?: string;
+    suggestedParams: SuggestedParams;
+    strictEmptyAddressChecking?: boolean;
+  }): Transaction;
 
   export function makeAssetCreateTxn(
     from: string,
@@ -528,10 +580,10 @@ declare module 'algosdk' {
     total: number,
     decimals: number,
     defaultFrozen: boolean,
-    manager: string,
-    reserve: string,
-    freeze: string,
-    clawback: string,
+    manager?: string,
+    reserve?: string,
+    freeze?: string,
+    clawback?: string,
     unitName: string,
     assetName: string,
     assetURL: string,
@@ -585,43 +637,59 @@ declare module 'algosdk' {
 
   export function makeAssetDestroyTxnWithSuggestedParams(
     from: string,
-    note?: any,
+    note?: Uint8Array,
     assetIndex: number,
     suggestedParams: SuggestedParams
   ): Transaction;
+
+  export function makeAssetDestroyTxnWithSuggestedParamsFromObject(o: {
+    from: string;
+    note?: Uint8Array;
+    assetIndex: number;
+    suggestedParams: SuggestedParams;
+  }): Transaction;
 
   export function makeAssetFreezeTxn(
     from: string,
     fee: number,
     firstRound: number,
     lastRound: number,
-    note?: any,
+    note?: Uint8Array,
     genesisHash: string,
     genesisID: string,
     assetIndex: number,
-    freezeTarget: any,
-    freezeState: any
+    freezeTarget: string,
+    freezeState: boolean
   ): Transaction;
 
   export function makeAssetFreezeTxnWithSuggestedParams(
     from: string,
-    note?: any,
+    note?: Uint8Array,
     assetIndex: number,
     freezeTarget: string,
     freezeState: boolean,
     suggestedParams: SuggestedParams
   ): Transaction;
 
+  export function makeAssetFreezeTxnWithSuggestedParamsFromObject(o: {
+    from: string;
+    note?: Uint8Array;
+    assetIndex: number;
+    freezeTarget: string;
+    freezeState: boolean;
+    suggestedParams: SuggestedParams;
+  }): Transaction;
+
   export function makeAssetTransferTxn(
     from: string,
     to: string,
     closeRemainderTo?: string,
-    revocationTarget: any,
+    revocationTarget?: string,
     fee: number,
     amount: number,
     firstRound?: number,
     lastRound?: number,
-    note?: any,
+    note?: Uint8Array,
     genesisHash: string,
     genesisID: string,
     assetIndex: number
@@ -631,12 +699,23 @@ declare module 'algosdk' {
     from: string,
     to: string,
     closeRemainderTo?: string,
-    revocationTarget: any,
+    revocationTarget?: string,
     amount: number,
-    note?: any,
+    note?: Uint8Array,
     assetIndex: number,
     suggestedParams: SuggestedParams
   ): Transaction;
+
+  export function makeAssetTransferTxnWithSuggestedParamsFromObject(o: {
+    from: string;
+    to: string;
+    closeRemainderTo?: string;
+    revocationTarget?: string;
+    amount: number;
+    note?: Uint8Array;
+    assetIndex: number;
+    suggestedParams: SuggestedParams;
+  }): Transaction;
 
   export function makeKeyRegistrationTxn(
     from: string,
@@ -670,28 +749,38 @@ declare module 'algosdk' {
   ): LogicSig;
 
   export function makePaymentTxn(
-    from: any,
-    to: any,
-    fee: any,
-    amount: any,
-    closeRemainderTo: any,
-    firstRound: any,
+    from: string,
+    to: string,
+    fee: number,
+    amount: number | bigint,
+    closeRemainderTo?: string,
+    firstRound: number,
     lastRound: any,
     note: any,
     genesisHash: any,
     genesisID: any,
     rekeyTo?: string
-  ): any;
+  ): Transaction;
 
   export function makePaymentTxnWithSuggestedParams(
-    from: any,
-    to: any,
-    amount: any,
-    closeRemainderTo: any,
-    note: any,
-    suggestedParams: any,
+    from: string,
+    to: string,
+    amount: number | bigint,
+    closeRemainderTo?: string,
+    note?: Uint8Array,
+    suggestedParams: SuggestedParams,
     rekeyTo?: string
-  ): any;
+  ): Transaction;
+
+  export function makePaymentTxnWithSuggestedParamsFromObject(o: {
+    from: string;
+    to: string;
+    amount: number | bigint;
+    closeRemainderTo?: string;
+    note?: Uint8Array;
+    suggestedParams: SuggestedParams;
+    rekeyTo?: string;
+  }): Transaction;
 
   export function masterDerivationKeyToMnemonic(mdk: Buffer): string;
 
