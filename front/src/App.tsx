@@ -1,58 +1,17 @@
-import { ChangeEvent } from 'react';
-import {
-  RecoilRoot,
-  atom,
-  useRecoilState,
-  selector,
-  useRecoilValue,
-} from 'recoil';
+import { RecoilRoot } from 'recoil';
 
-const textState = atom({
-  key: 'textState',
-  default: '',
-});
-
-const charCountState = selector({
-  key: 'charCountState',
-  get: ({ get }) => {
-    const text = get(textState);
-
-    return text.length;
-  },
-});
-
-const TextInput = () => {
-  const [text, setText] = useRecoilState(textState);
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
-  };
-
-  return (
-    <div className="p-1">
-      <input
-        type="text"
-        value={text}
-        onChange={onChange}
-        className="border-2 border-black"
-      />
-      <br />
-      Echo: {text}
-    </div>
-  );
-};
-
-const CharacterCount = () => {
-  const count = useRecoilValue(charCountState);
-
-  return <div>Character Count: {count}</div>;
-};
+//import TodoList from './components/TodoList';
+//import SometimesSuspend from './components/SometimesSuspend';
+import { Suspense } from 'react';
+import DataLoader from './components/DataLoader';
 
 const App = () => {
   return (
     <RecoilRoot>
-      <TextInput />
-      <CharacterCount />
+      {/* <TodoList /> */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <DataLoader />
+      </Suspense>
     </RecoilRoot>
   );
 };

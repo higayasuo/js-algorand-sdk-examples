@@ -14,7 +14,7 @@ const TodoItem = ({ todo }: TodoItemParamsType) => {
   const onEdit = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     const newTodoList = [...todoList];
 
-    newTodoList[index].text = value;
+    newTodoList[index] = { ...newTodoList[index], text: value };
 
     setTodoList(newTodoList);
   };
@@ -22,7 +22,10 @@ const TodoItem = ({ todo }: TodoItemParamsType) => {
   const onToggle = () => {
     const newTodoList = [...todoList];
 
-    newTodoList[index].isComplete = !todo.isComplete;
+    newTodoList[index] = {
+      ...newTodoList[index],
+      isComplete: !todo.isComplete,
+    };
 
     setTodoList(newTodoList);
   };
@@ -36,7 +39,7 @@ const TodoItem = ({ todo }: TodoItemParamsType) => {
   };
 
   return (
-    <div>
+    <div className="mt-2">
       <input
         type="text"
         value={todo.text}
