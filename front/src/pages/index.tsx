@@ -1,5 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { RecoilRoot } from 'recoil';
+import { Suspense } from 'react';
+
+import DataLoader from '../components/DataLoader';
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +15,12 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1 className="text-3xl">Hello Next.js!</h1>
+        <RecoilRoot>
+          {/* <TodoList /> */}
+          <Suspense fallback={<div>Loading...</div>}>
+            <DataLoader />
+          </Suspense>
+        </RecoilRoot>
       </main>
     </div>
   );
