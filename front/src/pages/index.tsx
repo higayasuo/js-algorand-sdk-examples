@@ -1,9 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { RecoilRoot } from 'recoil';
 import { Suspense } from 'react';
-
-import DataLoader from '../components/DataLoader';
+import { RecoilRoot } from 'recoil';
 
 const Home: NextPage = () => {
   return (
@@ -16,10 +14,7 @@ const Home: NextPage = () => {
 
       <main>
         <RecoilRoot>
-          {/* <TodoList /> */}
-          <Suspense fallback={<div>Loading...</div>}>
-            <DataLoader />
-          </Suspense>
+          <Suspense fallback={<p>Loading...</p>}></Suspense>
         </RecoilRoot>
       </main>
     </div>
