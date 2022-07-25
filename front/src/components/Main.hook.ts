@@ -8,23 +8,8 @@ import walletState, {
   WalletStateType,
 } from '../lib/states/walletState';
 import { ErrorHandlerType } from '../lib/types';
-import { useEffect } from 'react';
 
 const BRIDGE = 'https://bridge.walletconnect.org';
-
-const createWallet = (setState: SetterOrUpdater<WalletStateType>) => {
-  const connector = new WalletConnect({
-    bridge: BRIDGE,
-    qrcodeModal: QRCodeModal,
-  });
-
-  setState((prev) => ({
-    ...prev,
-    connector,
-  }));
-
-  return connector;
-};
 
 const subscribeToConnect = (
   connector: WalletConnect,

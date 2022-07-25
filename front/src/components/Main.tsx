@@ -1,3 +1,4 @@
+import Header from './Header';
 import useHook from './Main.hook';
 
 const Main = () => {
@@ -5,13 +6,17 @@ const Main = () => {
 
   return (
     <>
-      <div>{JSON.stringify(state, null, 2)}</div>
-      <button className="border-2 p-2" onClick={onConnectWallet}>
-        Connect to Wallet
-      </button>
-      <button className="border-2 p-2" onClick={onDisconnectWallet}>
-        Disconnect to Wallet
-      </button>
+      <Header />
+      {!state.connected && (
+        <button className="border-2 p-2" onClick={onConnectWallet}>
+          Connect to Wallet
+        </button>
+      )}
+      {state.connected && (
+        <button className="border-2 p-2" onClick={onDisconnectWallet}>
+          Disconnect to Wallet
+        </button>
+      )}
     </>
   );
 };
