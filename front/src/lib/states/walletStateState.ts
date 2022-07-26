@@ -2,19 +2,19 @@ import WalletConnect from '@walletconnect/client';
 import { atom } from 'recoil';
 
 export type WalletStateType = {
-  connector?: WalletConnect;
-  connected: boolean;
-  address?: string;
+  connector: WalletConnect | undefined;
+  address: string | undefined;
 };
 
 export const initialState: WalletStateType = {
-  connected: false,
+  connector: undefined,
+  address: undefined,
 };
 
-const walletState = atom<WalletStateType>({
-  key: 'WalletState',
+const walletStateState = atom<WalletStateType>({
+  key: 'WalletStateState',
   default: { ...initialState },
   dangerouslyAllowMutability: true,
 });
 
-export default walletState;
+export default walletStateState;

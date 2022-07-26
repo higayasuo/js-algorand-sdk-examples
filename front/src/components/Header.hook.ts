@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import chainState from '../lib/states/chainState';
-import walletState from '../lib/states/walletState';
+import walletStateState from '../lib/states/walletStateState';
 import { ChainType } from '../lib/types';
 
 const useHook = () => {
-  const { connected, address } = useRecoilValue(walletState);
+  const { address } = useRecoilValue(walletStateState);
   const [chain, setChain] = useRecoilState(chainState);
 
   const chainValueLabels = [
@@ -28,7 +28,7 @@ const useHook = () => {
     }
   };
 
-  return { connected, address, chain, chainValueLabels, onChangeChain };
+  return { address, chain, chainValueLabels, onChangeChain };
 };
 
 export default useHook;
