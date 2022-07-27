@@ -1,12 +1,14 @@
+import AccountAssets from './AccountAssets';
 import Header from './Header';
-import useHook from './Main.hook';
+import useMainHook from './Main.hook';
 
 const Main = () => {
-  const { address, onConnectWallet, onDisconnectWallet } = useHook();
+  const { address, onConnectWallet, onDisconnectWallet } = useMainHook();
 
   return (
-    <>
+    <div className="p-4 max-w-screen-sm">
       <Header />
+      <AccountAssets />
       {!address && (
         <button className="border-2 p-2" onClick={onConnectWallet}>
           Connect to Wallet
@@ -17,7 +19,7 @@ const Main = () => {
           Disconnect to Wallet
         </button>
       )}
-    </>
+    </div>
   );
 };
 

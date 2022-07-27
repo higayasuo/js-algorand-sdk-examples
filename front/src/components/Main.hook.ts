@@ -3,34 +3,17 @@ import QRCodeModal from 'algorand-walletconnect-qrcode-modal';
 import { useRecoilState } from 'recoil';
 import { useErrorHandler } from 'react-error-boundary';
 
-import walletStateState, { initialState } from '../lib/states/walletStateState';
+import walletStateState from '../lib/states/walletStateState';
 import { useEffect } from 'react';
 
 const BRIDGE = 'https://bridge.walletconnect.org';
 
-const useHook = () => {
+const useMainHook = () => {
   const [walletState, setWalletState] = useRecoilState(walletStateState);
   const { address } = walletState;
   const errorHandler = useErrorHandler();
 
   useEffect(() => {
-    const connector = new WalletConnect({
-      bridge: BRIDGE,
-      qrcodeModal: QRCodeModal,
-    });
-
-    if (connector.connected) {
-      const { accounts } = connector;
-      const address = accounts[0];
-
-      setWalletState({
-        connector,
-        address,
-      });
-    }
-  }, [setWalletState]);
-
-  const onConnectWallet = () => {
     const connector = new WalletConnect({
       bridge: BRIDGE,
       qrcodeModal: QRCodeModal,
@@ -61,17 +44,13 @@ const useHook = () => {
         return;
       }
 
-      setWalletState({ ...initialState });
+      setWalletState((prev) => ({
+        ...prev,
+        address: undefined,
+      }));
     });
 
-    if (!connector.connected) {
-      setWalletState({
-        connector,
-        address: undefined,
-      });
-
-      connector.createSession().catch(errorHandler);
-    } else {
+    if (connector.connected) {
       const { accounts } = connector;
       const address = accounts[0];
 
@@ -79,6 +58,19 @@ const useHook = () => {
         connector,
         address,
       });
+    } else {
+      setWalletState({
+        connector,
+        address: undefined,
+      });
+    }
+  }, [setWalletState, errorHandler]);
+
+  const onConnectWallet = () => {
+    const { connector } = walletState;
+
+    if (connector && !connector.connected) {
+      connector.createSession().catch(errorHandler);
     }
   };
 
@@ -93,4 +85,4 @@ const useHook = () => {
   return { address, onConnectWallet, onDisconnectWallet };
 };
 
-export default useHook;
+export default useMainHook;

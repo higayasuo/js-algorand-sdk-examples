@@ -1,4 +1,5 @@
 import algosdk, { Algodv2 } from 'algosdk';
+import { Unarray, Unpromise } from '../types';
 
 const getAccountAssets = async (client: Algodv2, address: string) => {
   const accountInfo = await client
@@ -45,5 +46,9 @@ const getAccountAssets = async (client: Algodv2, address: string) => {
 
   return assets;
 };
+
+export type AccountAsset = Unarray<
+  Unpromise<ReturnType<typeof getAccountAssets>>
+>;
 
 export default getAccountAssets;

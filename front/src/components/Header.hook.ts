@@ -4,7 +4,7 @@ import chainState from '../lib/states/chainState';
 import walletStateState from '../lib/states/walletStateState';
 import { ChainType } from '../lib/types';
 
-const useHook = () => {
+const useHeaderHook = () => {
   const { address } = useRecoilValue(walletStateState);
   const [chain, setChain] = useRecoilState(chainState);
 
@@ -31,4 +31,4 @@ const useHook = () => {
   return { address, chain, chainValueLabels, onChangeChain };
 };
 
-export default useHook;
+export default useHeaderHook;
