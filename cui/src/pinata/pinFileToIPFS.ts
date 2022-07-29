@@ -1,7 +1,7 @@
 import { join, dirname } from 'path';
 import fs from 'fs';
 
-import { pinFileToIPFS } from '@/utils/pinataHelper';
+import { pinFileToIPFS } from '../utils/pinataHelper';
 
 const main = async () => {
   const readable = fs.createReadStream(

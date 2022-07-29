@@ -1,5 +1,5 @@
 import algosdk from 'algosdk';
-import { selector, snapshot_UNSTABLE } from 'recoil';
+import { selector } from 'recoil';
 import { ChainType } from '../types';
 import chainState from './chainState';
 

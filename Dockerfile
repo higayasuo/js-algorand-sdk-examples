@@ -21,6 +21,6 @@ RUN echo '"\\C-n": history-search-forward' >> ~/.inputrc
 RUN echo '"\\e[A": history-search-backward' >> ~/.inputrc
 RUN echo '"\\e[B": history-search-forward' >> ~/.inputrc
 
-COPY package.json yarn.lock ./
+# COPY package.json yarn.lock ./
 
-RUN yarn install
+# RUN yarn install

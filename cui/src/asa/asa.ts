@@ -16,10 +16,12 @@ const main = async () => {
   await destroyAsset(assetIndex);
 };
 
-(async () => {
-  await main();
-  process.exit(0);
-})().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  (async () => {
+    await main();
+    process.exit(0);
+  })().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

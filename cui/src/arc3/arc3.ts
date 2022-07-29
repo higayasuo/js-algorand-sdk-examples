@@ -1,12 +1,11 @@
 import fs from 'fs';
 import { join, dirname } from 'path';
 
-import 'dotenv/config';
+import algosdk from 'algosdk';
 
-import * as algosdk from 'algosdk';
-
-import { createTestnetAlgodClient, signSendWaitTxn } from '@/utils/algoHelper';
-import { pinFileToIPFS, pinJSONToIPFS } from '@/utils/pinataHelper';
+import { test1Account } from '../account/accounts';
+import { createAlgodClient, signSendWaitTxn } from '../utils/algoHelper';
+import { pinFileToIPFS, pinJSONToIPFS } from '../utils/pinataHelper';
 
 type NFTParamsType = {
   assetName: string;
@@ -57,8 +56,8 @@ const createNFT = async ({
 }: NFTParamsType) => {
   console.log('createNFT:', assetName, assetURL);
 
-  const algodClient = createTestnetAlgodClient();
-  const account = algosdk.mnemonicToSecretKey(process.env.TEST_MNEMONIC || '');
+  const algodClient = createAlgodClient();
+  const account = test1Account;
 
   console.log('Creator Address:', account.addr);
 
@@ -72,13 +71,14 @@ const createNFT = async ({
     assetURL,
     assetMetadataHash,
     defaultFrozen: false,
+    manager: account.addr,
     suggestedParams,
   });
 
   const ctxResult = await signSendWaitTxn(algodClient, txn, account.sk);
   const assetID = ctxResult['asset-index'];
 
-  console.log('Account:', account.addr, 'Asset ID: ', assetID);
+  console.log('Asset ID:', assetID);
 };
 
 const main = async () => {

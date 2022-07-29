@@ -1,12 +1,9 @@
 import * as algosdk from 'algosdk';
 
-import {
-  accountA,
-  accountB,
-  createAlgodClient,
-  signSendWaitTxn,
-} from '@/utils/algoHelper';
+import { createAlgodClient, signSendWaitTxn } from '../utils/algoHelper';
 import printCreatedAsset from './printCreatedAsset';
+
+import { test1Account, test2Account } from '../account/accounts';
 
 const createAsset = async () => {
   console.log('Create aseet');
@@ -15,26 +12,26 @@ const createAsset = async () => {
   const suggestedParams = await algodClient.getTransactionParams().do();
 
   const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
-    from: accountA.addr,
+    from: test1Account.addr,
     total: 1000,
     decimals: 0,
     defaultFrozen: false,
-    manager: accountB.addr,
-    reserve: accountB.addr,
-    freeze: accountB.addr,
-    clawback: accountB.addr,
+    manager: test2Account.addr,
+    reserve: test2Account.addr,
+    freeze: test2Account.addr,
+    clawback: test2Account.addr,
     unitName: 'AAA',
     assetName: 'AAA',
     assetURL: 'https://someurl',
     suggestedParams,
   });
 
-  const ctx = await signSendWaitTxn(algodClient, txn, accountA.sk);
-  const assetIndex = ctx['asset-index'];
+  const ctx = await signSendWaitTxn(algodClient, txn, test1Account.sk);
+  const assetID = ctx['asset-index'];
 
-  await printCreatedAsset(accountA.addr, assetIndex);
+  await printCreatedAsset(test1Account.addr, assetID);
 
-  return assetIndex;
+  return assetID;
 };
 
 export default createAsset;
